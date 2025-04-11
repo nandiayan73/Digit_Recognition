@@ -25,17 +25,18 @@ class DigitClassifier(nn.Module):
         x = self.fc2(x)
         return x
 
-# Load dataset
+# using the Mnist data to train the model
 transform = transforms.Compose([transforms.ToTensor(), transforms.Normalize((0.5,), (0.5,))])
 train_data = MNIST(root='data', train=True, download=True, transform=transform)
 train_loader = DataLoader(train_data, batch_size=64, shuffle=True)
 
-# Train model
+# Training the model
 model = DigitClassifier()
 criterion = nn.CrossEntropyLoss()
 optimizer = torch.optim.Adam(model.parameters(), lr=0.001)
 
-for epoch in range(1):  # Train for just 1 epoch for demo
+# Demo traiing
+for epoch in range(1):  
     for images, labels in train_loader:
         optimizer.zero_grad()
         outputs = model(images)
