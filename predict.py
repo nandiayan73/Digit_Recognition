@@ -4,15 +4,16 @@ from PIL import Image
 import cv2
 import numpy as np
 
-from digit_recognition import DigitClassifier  # import from the previous file
+from digit_recognition import DigitClassifier  
 
 model = DigitClassifier()
 model.load_state_dict(torch.load('digit_model.pth'))
 model.eval()
 
 # Preprocess your image (28x28, grayscale)
+# convert to grey scale before doing the training
 def process_image(img_path):
-    image = Image.open(img_path).convert('L')  # convert to grayscale
+    image = Image.open(img_path).convert('L')  
     image = image.resize((28, 28))
     transform = transforms.Compose([
         transforms.ToTensor(),
@@ -22,7 +23,7 @@ def process_image(img_path):
     return image
 
 # Predict
-img_tensor = process_image("your_digit_image.jpg")  # path to your paper image
+img_tensor = process_image("paperpic.jpg")  
 output = model(img_tensor)
 _, predicted = torch.max(output, 1)
 
